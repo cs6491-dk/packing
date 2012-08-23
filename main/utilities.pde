@@ -36,6 +36,7 @@ void scribeHeaderRight(String S, int yoffset) {fill(0); text(S,width-7.5*S.lengt
 void scribeFooter(String S, int i) {fill(0); text(S,10,height-10-i*20); noFill();} // writes black on screen at line i from bottom
 void scribeAtMouse(String S) {fill(0); text(S,mouseX,mouseY); noFill();} // writes on screen near mouse
 void scribeMouseCoordinates() {fill(black); text("("+mouseX+","+mouseY+")",mouseX+7,mouseY+25); noFill();}
+void drawDividers(){line(400,0,400,600);line(360,0,360,600);line(440,0,440,600);};
 void displayTextImage() { // Displays text and authors face on screen
     scribeHeader(title,0); scribeHeaderRight(name1,20); scribeHeaderRight(name2,150); 
     image(myFace, width-myFace.width/2,25,myFace.width/2,myFace.height/2); 
