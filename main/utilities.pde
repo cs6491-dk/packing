@@ -1,10 +1,29 @@
+class disk {
+  float x=0, y=0, r=10;
+  disk(float px, float py, float pr) {r=pr; x=px; y=py;}
+  disk set_radius_to_mouse() {r=sqrt(sq(x-mouseX)+sq(y-mouseY)); return this;}
+  disk set_center_to_mouse() {x=mouseX; y=mouseY; return this;}
+  disk show() {fill(0, 255, 255); ellipse(x, y, 2*r, 2*r);return this;}
+  float dis_ctr_to_mouse() {return sqrt(sq(x-mouseX)+sq(y-mouseY));}
+  float dis_border_to_mouse() {return abs(dis_ctr_to_mouse()-r);}
+  }
+
+// ************************************************************************ CONFIGURATION
+int numDisks=0;
+String line;
+ArrayList disks1; // player 1 disks
+ArrayList disks2; // player 2 disks
+BufferedReader reader;
+int turn=0; // player 1
+
 // ************************************************************************ GRAPHICS 
 void pen(color c, float w) {stroke(c); strokeWeight(w);}
 void showDisk(float x, float y, float r) {ellipse(x,y,r*2,r*2);}
 
 // ************************************************************************ IMAGES & VIDEO 
 int pictureCounter=0;
-PImage myFace; // picture of author's face, should be: data/pic.jpg in sketch folder
+PImage myFace1; // picture of author's face, should be: data/pic.jpg in sketch folder
+PImage myFace2; // picture of author's face, should be: data/pic.jpg in sketch folder
 void snapPicture() {saveFrame("PICTURES/P"+nf(pictureCounter++,3)+".jpg"); }
 
 // ************************************************************************ COLORS 
@@ -37,11 +56,59 @@ void scribeFooter(String S, int i) {fill(0); text(S,10,height-10-i*20); noFill()
 void scribeAtMouse(String S) {fill(0); text(S,mouseX,mouseY); noFill();} // writes on screen near mouse
 void scribeMouseCoordinates() {fill(black); text("("+mouseX+","+mouseY+")",mouseX+7,mouseY+25); noFill();}
 void drawDividers(){line(400,0,400,600);line(360,0,360,600);line(440,0,440,600);};
+void setTurnText(int I){
+String S; 
+fill(0); 
+if (I==0){
+S="Player 1";
+}
+else if (I == 1) {
+S="Player 2";
+}
+else{
+  S="Game Over";
+}
+text("Current turn: "+S,10,40);noFill();
+}
 void displayTextImage() { // Displays text and authors face on screen
-    scribeHeader(title,0); scribeHeaderRight(name1,20); scribeHeaderRight(name2,150); 
-    image(myFace, width-myFace.width/2,25,myFace.width/2,myFace.height/2); 
+    scribeHeader(title,0); scribeHeaderRight(name1,150); scribeHeaderRight(name2,280); 
+    image(myFace1, width-myFace1.width/2,25,myFace1.width/2,myFace1.height/2); 
     scribeFooter(guide,1); 
     scribeFooter(menu,0); 
     }
 
-
+void loadDiskConfig(){
+  println("Loading disk config...");
+  reader = createReader("data/disk_config.txt"); 
+  boolean reading = true;
+  int ct=0; 
+  float rad;
+  while (reading)
+  {
+    try
+    {
+      line = reader.readLine();
+      ct += 1;
+      if (line == null){
+        reading = false;
+      }
+      else if (ct == 1) {
+           numDisks = int(line);
+           println("There are " + numDisks + " disks"); 
+      }
+      else {
+      // Read a disk
+         rad = float(line);
+         disks1.add(new disk(380, ct*50, rad));
+         disks2.add(new disk(420, ct*50, rad));
+         println("Disk of size: "+rad + " added");
+      }
+    } 
+    catch (IOException e) 
+    {
+      e.printStackTrace();
+      line = null;
+      reading = false;
+    }
+  }
+}
