@@ -3,6 +3,7 @@
 // Subject: Packing Game
 // Class: CS6491
 // Last update on: August 22, 2012
+// $Id$
 // Usage: press 'r' to see rows
 //        click&drag mouse horizontally to change number of disks
 // Contains: tools for using colors, images, screen (help) text
