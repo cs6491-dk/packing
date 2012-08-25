@@ -46,10 +46,10 @@ void draw() {
     fill(black); 
     text(str(key), mouseX-2, mouseY);
   }
-  if (!mousePressed) scribeMouseCoordinates();
-  if (scribeText) displayTextImage();
   mc.update();
   displayDisks(); 
+  if (!mousePressed) scribeMouseCoordinates();
+  if (scribeText) displayTextImage();
 }
 
 // User actions
