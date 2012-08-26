@@ -5,6 +5,7 @@ class Disk {
   Disk set_center_to_mouse() {x=mouseX; y=mouseY; return this;}
   Disk set_center(float newX, float newY) {x=newX; y=newY; return this;};
   Disk show() {strokeWeight(1); fill(0, 255, 255); ellipse(x, y, 2*r, 2*r);return this;}
+  Disk show_outline() {strokeWeight(1); noFill(); ellipse(x, y, 2*r, 2*r); return this;}
   float dis_ctr_to_mouse() {return sqrt(sq(x-mouseX)+sq(y-mouseY));}
   float dis_border_to_mouse() {return abs(dis_ctr_to_mouse()-r);}
   }

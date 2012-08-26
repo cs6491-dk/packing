@@ -50,6 +50,8 @@ void draw() {
   displayDisks(); 
   if (!mousePressed) scribeMouseCoordinates();
   if (scribeText) displayTextImage();
+  solveApollonius((Disk) disks1.get(0), (Disk) disks1.get(1), (Disk) disks1.get(2), -1, -1, -1).show_outline();
+  solvePair((Disk) disks1.get(0), (Disk) disks1.get(1)).show_outline();
 }
 
 // User actions
