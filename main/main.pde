@@ -14,7 +14,7 @@ Boolean scribeText=true; // toggle for displaying of help text
 String title ="CS6491 Fall 2012, Project 1: Packing",
        name1 ="Kyle Harrigan",
        name2="Donnie Smith",
-       menu="?:help(on/off), !:snapPicure,  r: to see ramp, d: player done with turn, Q:quit", 
+       menu="?:help(on/off), !:snapPicure,  r: reset, d: player done with turn, Q:quit", 
        guide="press&drag mouse right/left to move disks";
 MouseController mc;
 // color variables are defined in the "utilities" tab and set in "defineColors" during initialization
@@ -68,6 +68,9 @@ void keyPressed() {
     else {
       mc.set_turn();
     }
+  }
+  if (key=='r'){
+     setup(); 
   }
   if (key=='Q') exit();  // quit application
 }
