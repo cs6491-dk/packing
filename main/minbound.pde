@@ -1,3 +1,54 @@
+Disk minbound(ArrayList disks) {
+  Disk sol = new Disk(0,0,1e10),
+       tmp, di, dj, dk;
+  
+  for (int i=0; i < disks.size(); i++) {
+    di = (Disk) disks.get(i);
+    for (int j=i+1; j < disks.size(); j++) {
+      dj = (Disk) disks.get(j);
+      tmp = solvePair(di, dj);
+      if (tmp.r < sol.r) {
+        if (containsAll(tmp, disks)) {
+          sol = tmp;
+        }
+        else {
+          for (int k=j+1; k < disks.size(); k++) {
+            dk = (Disk) disks.get(k);
+            tmp = solveApollonius(di, dj, dk, -1, -1, -1);
+            if ((tmp.r < sol.r) && containsAll(tmp, disks)) {
+              sol = tmp;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (sol.r >= 1e10) {
+    println("No solution found");
+  }
+
+  return sol;
+}
+
+Boolean containsAll(Disk d, ArrayList disks) {
+  float r2 = d.r*d.r;
+  float dx, dy, dr;
+  Disk c;
+
+  for (int i=0; i < disks.size(); i++) {
+    c = (Disk) disks.get(i);
+    dx = c.x - d.x;
+    dy = c.y - d.y;
+    dr = d.r - c.r;
+    //if ((dr < 0) || (dr*dr < dx*dx + dy*dy)) {
+    if ((d.r < c.r) || (d.r + 1e-3 < sqrt(dx*dx + dy*dy) + c.r)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 Disk solvePair(Disk d1, Disk d2) {
   float dx = d2.x - d1.x,
         dy = d2.y - d1.y;
@@ -16,6 +67,11 @@ Disk solveApollonius(Disk d1, Disk d2, Disk d3, int s1, int s2, int s3)
 if (d1.x == d2.x) {
   Disk tmp = d2;
   d2 = d3;
+  d3 = tmp;
+}
+else if (d2.x == d3.x) {
+  Disk tmp = d2;
+  d3 = d2;
   d3 = tmp;
 }
 
@@ -62,8 +118,6 @@ float c = x1*x1 + M*M - 2*M*x1 + P*P + y1*y1 - 2*P*y1 - r1*r1;
 float rs = (-b + sqrt(b*b-4*a*c))/(2*a);
 float xs = M+N*rs;
 float ys = P+Q*rs;
-println(w12 + " " + w13 + " " + w14);
-//println(xs + " " + ys + " " + rs);
 
-return new Disk(xs, ys, rs);
+return new Disk(xs, ys, abs(rs));
 }
