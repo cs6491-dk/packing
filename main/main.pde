@@ -52,10 +52,10 @@ void draw() {
   displayDisks(); 
   if (!mousePressed) scribeMouseCoordinates();
   if (scribeText) displayTextImage();
-  solveApollonius(disks1.get(0), disks1.get(1), disks1.get(2), -1, -1, -1).show_outline();
-  solvePair(disks1.get(0), disks1.get(1)).show_outline();
-  solvePair(disks1.get(1), disks1.get(2)).show_outline();
-  solvePair(disks1.get(0), disks1.get(2)).show_outline();
+  //solveApollonius(disks1.get(0), disks1.get(1), disks1.get(2), -1, -1, -1).show_outline();
+  //solvePair(disks1.get(0), disks1.get(1)).show_outline();
+  //solvePair(disks1.get(1), disks1.get(2)).show_outline();
+  //solvePair(disks1.get(0), disks1.get(2)).show_outline();
   Disk tmp = new Disk(30, 30, 50);
 }
 

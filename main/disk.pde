@@ -1,6 +1,8 @@
 class Disk {
   float x=0, y=0, r=10;
-  Disk(float px, float py, float pr) {r=pr; x=px; y=py;}
+  Vector<Integer> collisions;
+  
+  Disk(float px, float py, float pr) {r=pr; x=px; y=py; collisions = new Vector<Integer>();}
   Disk set_radius_to_mouse() {r=sqrt(sq(x-mouseX)+sq(y-mouseY)); return this;}
   Disk set_center_to_mouse() {x=mouseX; y=mouseY; return this;}
   Disk set_center(float newX, float newY) {x=newX; y=newY; return this;}
@@ -8,6 +10,12 @@ class Disk {
   void  set_y(float val){y = val;}
   float get_y(){return y;}
   float get_r(){return r;}
+  void collide(int disk_idx){ if (!collisions.contains(disk_idx)) collisions.add(disk_idx);}
+  void uncollide(int disk_idx){if (collisions.contains(disk_idx)){println("uncollide"); collisions.removeElement(disk_idx);}}
+  Vector get_collisions(){return collisions;}
+  void print_collisions(){
+    //print("Current collisions: "); for (int i=0; i < collisions.size(); i++) print(collisions.get(i)+","); println();
+  }
   boolean contains(Disk testdisk){return false;}
   Disk show() {strokeWeight(1); fill(0, 255, 255); ellipse(x, y, 2*r, 2*r);return this;}
   Disk show_outline() {strokeWeight(1); noFill(); ellipse(x, y, 2*r, 2*r); return this;}
@@ -15,9 +23,9 @@ class Disk {
   float dis_border_to_mouse() {return abs(dis_ctr_to_mouse()-r);}
   }
 
-class Disks{
+class Disks {
    // Arraylist of disks
-   ArrayList disks;
+   ArrayList<Disk> disks;
    Disks() {disks = new ArrayList();}
    void sort(){
        println("Sorting disks by radius, biggest to smallest");
@@ -27,13 +35,13 @@ class Disks{
             }
         });
         for (int i=0; i < disks.size(); i++){
-           Disk tmp = (Disk) disks.get(i);
+           Disk tmp = disks.get(i);
           tmp.set_y(50*(i+1)); 
         }
         
    }
    void add(Disk toadd){disks.add(toadd);};
-   Disk get(int position){return (Disk) disks.get(position);}
+   Disk get(int position){return disks.get(position);}
    int size(){return disks.size();}
   
   
