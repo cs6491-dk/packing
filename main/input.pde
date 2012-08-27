@@ -1,5 +1,5 @@
 class MouseController {
-  ArrayList disks = null;
+  Disks disks = null;
   int current_disk_idx = -1;
 
   void set_turn() {
@@ -18,7 +18,7 @@ class MouseController {
       float d=1e10;
       if (current_disk_idx == -1) {
         for (int i=0; i < disks.size(); i++) {
-          D = (Disk) disks.get(i);
+          D = disks.get(i);
           float tmpd = D.dis_ctr_to_mouse();
           if (tmpd < d && tmpd < 100) {
             d = tmpd;
@@ -28,7 +28,7 @@ class MouseController {
       }
 
       if (current_disk_idx != -1) {
-        Disk current_disk = (Disk) disks.get(current_disk_idx);
+        Disk current_disk = disks.get(current_disk_idx);
         float x = mouseX, y = mouseY;
 
         // Limit to the current player's side
@@ -40,7 +40,7 @@ class MouseController {
         Disk other_disk;
         for (int i=0; i < disks.size(); i++) {
           if (i != current_disk_idx) {
-            other_disk = (Disk) disks.get(i);
+            other_disk =  disks.get(i);
             float dx = x - other_disk.x,
                   dy = y - other_disk.y,
                   r = current_disk.r + other_disk.r;
