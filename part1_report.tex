@@ -13,7 +13,7 @@
 \title{Packing Game - Part A}
 \author{
 Donnie Smith \\
-youremail@somewhere.com
+donnie.smith@gatech.edu
   \and 
 Kyle Harrigan \\
 kwharrigan@gmail.com
@@ -35,11 +35,34 @@ kwharrigan@gmail.com
  \subsection{To Be Done}
  
 \section{Computing Minimal Containing Disk}
+The minimal containing circle was computed by finding the minimal containing circles for all pairs and some triplets of the circles.
+The algorithm functions as follows:
+\begin{enumerate}
+	\item The current best solution is initialized to an impossibly large radius.
+	\item For each pair of circles:
+	\begin{enumerate}
+		\item The minimum containing circle is computed.  If the radius of that circle is smaller than the current best solution:
+		\begin{enumerate}
+			\item If it contains all circles, then the current best solution is set to that circle.
+			\item Otherwise, the minimal containing circle of all triplets that includes the initial pair are considered.  If that circle contains all circles:
+			\begin{enumerate}
+				\item If the circle is smaller than the current best solution, then the current best solution is set to that circle.
+				\item No further triplets of this pair are considered.
+			\end{enumerate}
+		\end{enumerate}
+	\end{enumerate}
+\end{enumerate}
 
- - An outline of how you compute (or plan to compute) the minimal containing disk
- 
- - A screen shot of your app showing disks and the container
- - References (papers, URLs) that you found useful
+This algorithm is not the most efficient available, but runs in $O(n^4)$ time, which is acceptable for a small number of circles.
+The solution to the minimal bounding circle for triplets, which is one of the ten cases of Apollonius' Problem, was adapted from code written by Rasmus Fonseca.
+The code was modified to fix a bug in which an invalid solution is found when two of the three circles are vertically aligned.
+
+References:
+\begin{itemize}
+	\item http://en.wikipedia.org/wiki/Smallest\_circle\_problem
+	\item http://mathworld.wolfram.com/ApolloniusProblem.html
+	\item http://www.diku.dk/hjemmesider/ansatte/rfonseca/
+\end{itemize}
 
 \section{Screen Shot}
  - A screen shot of your app showing disks and the container
