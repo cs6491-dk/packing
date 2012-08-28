@@ -61,40 +61,37 @@ class MouseController {
               Vector<Integer> collisions = current_disk.get_collisions();
               if (collisions.size() == 2)
               {
-                println("Two disk collision: ");
-                float d12x, d12y, n12, n1c, n2c, angle, cx, cy, mcx, mcy;
+                println("Collision size of 2 detected");
+                float ra, rb, a, h, p2x, p2y;
                 Disk disk1 = disks.get(collisions.get(0));
                 Disk disk2 = disks.get(collisions.get(1));
-                d12x = disk2.x - disk1.x;
-                d12y = disk2.y - disk1.y;
-                n12 = sqrt(d12x*d12x + d12y*d12y);
-                n1c = disk1.r + current_disk.r;
-                n2c = disk2.r + current_disk.r;
-                dx = x - disk1.x;
-                dy = y - disk1.y;
-                // http://en.wikipedia.org/wiki/Law_of_cosines#Vector_formulation
-                // Cos(C) = (a^2+b^2-c^2)/2*a*b
-                angle = acos((n12*n12+n1c*n1c-n2c*n2c)/(2*n12*n1c));
-                println("Angle: " + angle*180/PI);
-                cx = disk1.x + d12x/n12*cos(angle)*(disk1.r+current_disk.r);
-                cy = disk1.y + d12y/n12*cos(angle)*(disk1.r+current_disk.r);
-                println("Solved value of c: " + cx + "," + cy);
-                mcx = cx-x;
-                mcy = cy-y;
                 
+                // The solution is simply the intersection of two circles, each inflated by the radius of the third
+                // A good example of the solution for this is http://paulbourke.net/geometry/2circle/
                 
-                //x = disk1.x + dx/n12*cos(angle)*(disk1.r+current_disk.r);
-                //y = disk1.y + dy/n12*cos(angle)*(disk1.r+current_disk.r);
-                println("r1 r2 cdr = " +  disk1.r + "," + disk2.r + "," + current_disk.r);
-                println("Disk1 xy = " + disk1.x + "," + disk1.y);
-                println("Disk2 xy = " + disk2.x + "," + disk2.y);
-                println("Current Disk xy = " + current_disk.x + "," + current_disk.y);               
-                println("Setting x,y to ("+ x + "," + y + ")");            
+                ra = disk1.r + current_disk.r;
+                rb = disk2.r + current_disk.r;
+                dx = disk1.x-disk2.x;
+                dy = disk1.y-disk2.y;
+                d = sqrt(dx*dx+dy*dy);
+                a = (ra*ra-rb*rb+d*d)/(2*d);
+                h = sqrt(ra*ra-a*a);
+                p2x = disk1.x + a*(disk2.x-disk1.x)/d;
+                p2y = disk1.y + a*(disk2.y-disk1.y)/d;
+                
+                x = p2x + h*(disk1.y-disk2.y)/d;
+                y = p2y - h*(disk1.x-disk2.x)/d;
+                print ("d, ra, rb : " + d + " " + ra + " " + rb);
+                println("Disk2 x,y is: " + disk2.x + "," + disk2.y);
+                println("Current x,y is: " + current_disk.x + "," + current_disk.y);
+                println("Setting x,y to: " + x + "," + y);
+                             
               } 
             }
-            else
+            else if (dx*dx + dy*dy > r*r)
             {
-            current_disk.uncollide(i);
+              //println("Uncollide");
+              current_disk.uncollide(i);
             }
           } 
         }

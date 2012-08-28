@@ -29,6 +29,7 @@ void setup() {               // executed once at the begining
   disks2.sort();
   // load image from file pic.jpg in folder data *** replace that file with your pic of your own face
   myFace1 = loadImage("data/kwharrigan.jpg");
+  myFace2 = loadImage("data/dsmith.jpg");
   // sets HSB color mode and THEN defines values for color variables
   defineMyColors();
   mc = new MouseController();
