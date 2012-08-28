@@ -55,7 +55,7 @@ text("Current turn: "+S,10,40);noFill();
 void displayTextImage() { // Displays text and authors face on screen
     scribeHeader(title,0); scribeHeaderRight(name1,150); scribeHeaderRight(name2,320); 
     image(myFace1, width-myFace1.width/2,25,myFace1.width/2,myFace1.height/2); 
-    image(myFace2, width-myFace2.width/2,160,myFace2.width/2,myFace2.height/2); 
+    image(myFace2, width-myFace2.width/8,160,myFace2.width/8,myFace2.height/8); 
     scribeFooter(guide,1); 
     scribeFooter(menu,0); 
     }
