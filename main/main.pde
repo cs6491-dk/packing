@@ -53,10 +53,26 @@ void draw() {
   displayDisks(); 
   if (!mousePressed) scribeMouseCoordinates();
   if (scribeText) displayTextImage();
-  //solveApollonius(disks1.get(0), disks1.get(1), disks1.get(2), -1, -1, -1).show_outline();
-  //solvePair(disks1.get(0), disks1.get(1)).show_outline();
-  //solvePair(disks1.get(1), disks1.get(2)).show_outline();
-  //solvePair(disks1.get(0), disks1.get(2)).show_outline();
+  Disk boundt1 = solveApollonius(disks1.get(0), disks1.get(1), disks1.get(2), -1, -1, -1).show_outline();
+  if (disks1.enclosedby(boundt1)) {
+    boundt1.show_bounding();
+  };
+
+  Disk boundp1 = solvePair(disks1.get(0), disks1.get(1)).show_outline();
+  if (disks1.enclosedby(boundp1)) {
+    println("Pair 0 1 bounds");
+    boundp1.show_bounding();
+  };  
+  Disk boundp2 = solvePair(disks1.get(1), disks1.get(2)).show_outline();
+  if (disks1.enclosedby(boundp2)) {
+    println("Pair 1 2 bounds");
+    boundp2.show_bounding();
+  };  
+  Disk boundp3 = solvePair(disks1.get(0), disks1.get(2)).show_outline();
+  if (disks1.enclosedby(boundp3)) {
+    println("Pair 0 2 bounds");
+    boundp3.show_bounding();
+  };  
   Disk tmp = new Disk(30, 30, 50);
 }
 

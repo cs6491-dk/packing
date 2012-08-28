@@ -16,9 +16,9 @@ class Disk {
   void print_collisions(){
     //print("Current collisions: "); for (int i=0; i < collisions.size(); i++) print(collisions.get(i)+","); println();
   }
-  boolean contains(Disk testdisk){return false;}
   Disk show() {strokeWeight(1); fill(0, 255, 255); ellipse(x, y, 2*r, 2*r);return this;}
   Disk show_outline() {strokeWeight(1); noFill(); ellipse(x, y, 2*r, 2*r); return this;}
+  Disk show_bounding() {strokeWeight(5); noFill(); ellipse(x, y, 2*r, 2*r);text("radius: " + r, 10,100);return this;}
   float dis_ctr_to_mouse() {return sqrt(sq(x-mouseX)+sq(y-mouseY));}
   float dis_border_to_mouse() {return abs(dis_ctr_to_mouse()-r);}
   }
@@ -36,9 +36,24 @@ class Disks {
         });
         for (int i=0; i < disks.size(); i++){
            Disk tmp = disks.get(i);
-          tmp.set_y(50*(i+1)); 
+           tmp.set_y(50*(i+1)); 
         }
         
+   }
+   boolean enclosedby(Disk testdisk)
+   { // Test to see if a given disks encloses all disks
+       float dx, dy, d;
+       for (int i=0; i < disks.size(); i++){
+          Disk tmp = disks.get(i);
+          dx = tmp.x-testdisk.x;
+          dy = tmp.y-testdisk.y;
+          d = sqrt(dx*dx+dy*dy);
+          if (d > abs(tmp.r-testdisk.r)){
+            println(i + " failed");
+            return false;      
+          }
+       }
+       return true;
    }
    void add(Disk toadd){disks.add(toadd);};
    Disk get(int position){return disks.get(position);}

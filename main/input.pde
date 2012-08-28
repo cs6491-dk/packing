@@ -79,6 +79,8 @@ class MouseController {
                 p2x = disk1.x + a*(disk2.x-disk1.x)/d;
                 p2y = disk1.y + a*(disk2.y-disk1.y)/d;
                 
+                // The solution has a +/- in it.  To determine which one we want, calculate both
+                // and pick the one closest to our current disk  
                 xs1 = p2x + h*(disk1.y-disk2.y)/d;
                 ys1 = p2y - h*(disk1.x-disk2.x)/d;
                 xs2 = p2x - h*(disk1.y-disk2.y)/d;
@@ -99,6 +101,7 @@ class MouseController {
                              
               } 
             }
+            // Need to implement triple collision
             else if (dx*dx + dy*dy > r*r)
             {
               //println("Uncollide");
