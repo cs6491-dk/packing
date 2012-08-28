@@ -62,7 +62,7 @@ class MouseController {
               if (collisions.size() == 2)
               {
                 println("Collision size of 2 detected");
-                float ra, rb, a, h, p2x, p2y;
+                float ra, rb, a, h, p2x, p2y, xs1,xs2,ys1,ys2,dx1,dx2,dy1,dy2;
                 Disk disk1 = disks.get(collisions.get(0));
                 Disk disk2 = disks.get(collisions.get(1));
                 
@@ -79,8 +79,19 @@ class MouseController {
                 p2x = disk1.x + a*(disk2.x-disk1.x)/d;
                 p2y = disk1.y + a*(disk2.y-disk1.y)/d;
                 
-                x = p2x + h*(disk1.y-disk2.y)/d;
-                y = p2y - h*(disk1.x-disk2.x)/d;
+                xs1 = p2x + h*(disk1.y-disk2.y)/d;
+                ys1 = p2y - h*(disk1.x-disk2.x)/d;
+                xs2 = p2x - h*(disk1.y-disk2.y)/d;
+                ys2 = p2y + h*(disk1.x-disk2.x)/d; 
+                dx1 = xs1-current_disk.x;
+                dx2 = xs2-current_disk.x;
+                dy1 = ys1-current_disk.y;
+                dy2 = ys2-current_disk.y;
+                if (sqrt(dx1*dx1+dy1*dy2) < sqrt(dx2*dx2+dy2*dy2)) {
+                   x= xs1; y=ys1;
+                }
+                else { x = xs2; y = ys2;}  
+                
                 print ("d, ra, rb : " + d + " " + ra + " " + rb);
                 println("Disk2 x,y is: " + disk2.x + "," + disk2.y);
                 println("Current x,y is: " + current_disk.x + "," + current_disk.y);
