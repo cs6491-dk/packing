@@ -3,13 +3,24 @@ class MouseController {
   int current_disk_idx = -1;
 
   void set_turn() {
-    if (turn == 0) disks = disks1;
-    else disks = disks2;
-
+    if (turn == 0) 
+    {
+      disks = disks1;
+    }
+    else if (turn == 1)
+    {
+      // Score player 1
+      disks = disks2;
+    }
+    else
+    {
+       disks = null; 
+    }
     current_disk_idx = -1;
   }
-
+  int get_turn() {return turn;};
   void update() {
+    if (disks == null) {return; }
     if (!mousePressed) {
       current_disk_idx = -1;
     }

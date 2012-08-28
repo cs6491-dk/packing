@@ -39,19 +39,19 @@ void scribeAtMouse(String S) {fill(0); text(S,mouseX,mouseY); noFill();} // writ
 void scribeMouseCoordinates() {fill(black); text("("+mouseX+","+mouseY+")",mouseX+7,mouseY+25); noFill();}
 void drawDividers(){line(width/2,0,width/2,height);line(width/2-40,0,width/2-40,height);line(width/2+40,0,width/2+40,height);};
 void setTurnText(int I){
-String S; 
-fill(0); 
-if (I==0){
-S="Player 1";
-}
-else if (I == 1) {
-S="Player 2";
-}
-else{
-  S="Game Over";
-}
-text("Current turn: "+S,10,40);noFill();
-}
+    String S; 
+    fill(0); 
+    if (I==0){
+    S="Player 1";
+    }
+    else if (I == 1) {
+    S="Player 2";
+    }
+    else{
+      S="Game Over";
+    }
+    text("Current turn: "+S,10,40);noFill();
+  }
 void displayTextImage() { // Displays text and authors face on screen
     scribeHeader(title,0); scribeHeaderRight(name1,150); scribeHeaderRight(name2,320); 
     image(myFace1, width-myFace1.width/2,25,myFace1.width/2,myFace1.height/2); 

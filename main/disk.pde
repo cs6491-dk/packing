@@ -17,8 +17,8 @@ class Disk {
     //print("Current collisions: "); for (int i=0; i < collisions.size(); i++) print(collisions.get(i)+","); println();
   }
   Disk show() {strokeWeight(1); fill(0, 255, 255); ellipse(x, y, 2*r, 2*r);return this;}
-  Disk show_outline() {strokeWeight(1); noFill(); ellipse(x, y, 2*r, 2*r); return this;}
-  Disk show_bounding() {strokeWeight(5); noFill(); ellipse(x, y, 2*r, 2*r);text("radius: " + r, 10,100);return this;}
+  Disk show_outline() {strokeWeight(1); noFill(); ellipse(x, y, 2*r, 2*r);text("Current Radius: " + r, x-r/2,y+r+10); return this;}
+  Disk show_bounding() {strokeWeight(5); noFill(); ellipse(x, y, 2*r, 2*r);return this;}
   float dis_ctr_to_mouse() {return sqrt(sq(x-mouseX)+sq(y-mouseY));}
   float dis_border_to_mouse() {return abs(dis_ctr_to_mouse()-r);}
   }
