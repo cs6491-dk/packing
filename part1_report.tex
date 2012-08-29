@@ -9,16 +9,24 @@
 \usepackage{multicol}
 \usepackage{tikz}
 \usetikzlibrary{calc}
+\usepackage{mathptmx}
 
 
 
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \usepackage{wrapfig}
 
+% Spacing stuff
 \usepackage[cm]{fullpage}
 \addtolength{\voffset}{-1in}
 \setlength{\topmargin}{0pt}
 \setlength\footskip{0pt}
+\setlength{\parskip}{0cm}
+\setlength{\parindent}{1em}
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{5pt}{1ex}{2ex}
+\titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
 
 \title{Packing Game - Part A}
 \author{
@@ -44,12 +52,13 @@ Kyle Harrigan (kwharrigan@gmail.com)
 
  \subsection{Problem Statement}
   
-Implement an application which allows two human players to compete in an intense battle of disk packing.  The goal is for players to pack the disks as tightly as possible, resulting in the smallest enclosing sphere.  The program must calculated the enclosing sphere, assign a score to each user, and declare a winner.  
+Implement an application which allows two human players to compete in an intense battle of disk packing.  The goal is for players to pack the disks as tightly as possible, resulting in the smallest enclosing sphere.  The program must calculate the minimal enclosing sphere, assign a score to each user, and declare a winner.  
  
  \subsection{Completed Features}
  \begin{multicols}{2}
  \begin{itemize}
-\setlength\multicolsep{0pt}
+ \setlength\multicolsep{0pt}
+\itemsep0em 
 \item Read disk count and disk sizes from file
 \item Create initial holding area for discs
 \item Limit disk movement to appropriate player's side
@@ -92,8 +101,10 @@ The code was modified to fix a bug in which an invalid solution is found when tw
 
 References:
 \begin{itemize}
+\itemsep0em
 	\item http://en.wikipedia.org/wiki/Smallest\_circle\_problem
 	\item http://mathworld.wolfram.com/ApolloniusProblem.html
 	\item http://www.diku.dk/hjemmesider/ansatte/rfonseca/
+	\item For handling multiple collisions (circle intersection problem) http://paulbourke.net/geometry/2circle/
 \end{itemize}
 \end{document}  
