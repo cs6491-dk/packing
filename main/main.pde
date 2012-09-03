@@ -12,11 +12,14 @@
 //**************************** global variables ****************************
 Boolean scribeText=true; // toggle for displaying of help text
 String title ="CS6491 Fall 2012, Project 1: Packing", 
-name1 ="Kyle Harrigan", 
-name2="Donnie Smith", 
-menu="?:help(on/off), !:snapPicure,  r: reset, d: player done with turn, Q:quit", 
-guide="press&drag mouse right/left to move disks";
+  name1 ="Kyle Harrigan", name2="Donnie Smith", 
+  menu="?:help(on/off), !:snapPicure,  r: reset, d: player done with turn, Q:quit", 
+  guide="press&drag mouse right/left to move disks";
 MouseController mc;
+AIPlayer ai;
+Disks disks1; // player 1 disks
+Disks disks2; // player 2 disks
+int turn=0; // player 1
 // color variables are defined in the "utilities" tab and set in "defineColors" during initialization
 
 //**************************** initialization ****************************

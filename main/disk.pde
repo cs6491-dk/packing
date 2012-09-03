@@ -64,10 +64,7 @@ class Disks {
 // ************************************************************************ CONFIGURATION
 int numDisks=0;
 String line;
-Disks disks1; // player 1 disks
-Disks disks2; // player 2 disks
 BufferedReader reader;
-int turn=0; // player 1
 
 void loadDiskConfig(){
   println("Loading disk config...");

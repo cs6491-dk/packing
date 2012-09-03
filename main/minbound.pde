@@ -72,8 +72,8 @@ Disk solveApollonius(Disk d1, Disk d2, Disk d3, int s1, int s2, int s3)
   }
   else if (d2.x == d3.x) {
     Disk tmp = d2;
-    d3 = d2;
-    d3 = tmp;
+    d2 = d1;
+    d1 = tmp;
   }
 
   float x1 = d1.x;
