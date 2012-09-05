@@ -3,9 +3,9 @@ Disk minbound(Disks disks) {
   tmp, di, dj, dk;
 
   for (int i=0; i < disks.size(); i++) {
-    di = (Disk) disks.get(i);
+    di = disks.get(i);
     for (int j=i+1; j < disks.size(); j++) {
-      dj = (Disk) disks.get(j);
+      dj = disks.get(j);
       tmp = solvePair(di, dj);
       if (tmp.r < sol.r) {
         if (containsAll(tmp, disks)) {
@@ -13,7 +13,7 @@ Disk minbound(Disks disks) {
         }
         else {
           for (int k=j+1; k < disks.size(); k++) {
-            dk = (Disk) disks.get(k);
+            dk = disks.get(k);
             tmp = solveApollonius(di, dj, dk, -1, -1, -1);
             if ((tmp.r < sol.r) && containsAll(tmp, disks)) {
               sol = tmp;
@@ -24,10 +24,10 @@ Disk minbound(Disks disks) {
     }
   }
 
-  if (sol.r >= 1e10) {
+  /*if (sol.r >= 1e10) {
     println("No solution found");
     
-  }
+  }*/
 
   return sol;
 }
@@ -38,7 +38,7 @@ Boolean containsAll(Disk d, Disks disks) {
   Disk c;
 
   for (int i=0; i < disks.size(); i++) {
-    c = (Disk) disks.get(i);
+    c = disks.get(i);
     dx = c.x - d.x;
     dy = c.y - d.y;
     dr = d.r - c.r;

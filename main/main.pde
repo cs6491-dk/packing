@@ -37,6 +37,7 @@ void setup() {               // executed once at the begining
   defineMyColors();
   mc = new MouseController();
   mc.set_turn();
+  ai = new AIPlayer(width/4, height/2, disks1);
 }
 
 //**************************** display current frame ****************************
@@ -52,8 +53,16 @@ void draw() {
     fill(black); 
     text(str(key), mouseX-2, mouseY);
   }
-  mc.update();
-  displayDisks(); 
+  if (turn == 0) {
+    if (ai.update()) {
+      turn = 1;
+      mc.set_turn();
+    }
+  }
+  else if (turn == 1) {
+    mc.update();
+  }
+  displayDisks();
   if (!mousePressed) scribeMouseCoordinates();
   if (scribeText) displayTextImage();
   minbound(disks1).show_outline();
@@ -87,12 +96,12 @@ void keyPressed() {
 void displayDisks() {
   for (int i=0; i<disks1.size(); i++)
   {
-    Disk theDisk = (Disk) disks1.get(i);
+    Disk theDisk = disks1.get(i);
     theDisk.show();
   }
   for (int i=0; i<disks2.size(); i++)
   {
-    Disk theDisk = (Disk) disks2.get(i);
+    Disk theDisk = disks2.get(i);
     theDisk.show();
   }
 }
