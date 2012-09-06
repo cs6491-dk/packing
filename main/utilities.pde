@@ -42,10 +42,10 @@ void setTurnText(int I){
     String S; 
     fill(0); 
     if (I==0){
-    S="Player 1";
+      S="Player 1";
     }
     else if (I == 1) {
-    S="Player 2";
+      S="Player 2";
     }
     else{
       S="Game Over";
