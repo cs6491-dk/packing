@@ -11,8 +11,6 @@
 \usetikzlibrary{calc}
 \usepackage{mathptmx}
 
-
-
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \usepackage{wrapfig}
 
@@ -97,6 +95,36 @@ The algorithm functions as follows:
 This algorithm is not the most efficient available, but runs in $O(n^4)$ time, which is acceptable for a small number of circles.
 The solution to the minimal bounding circle for triplets, which is one of the ten cases of Apollonius' Problem, was adapted from code written by Rasmus Fonseca.
 The code was modified to fix a bug in which an invalid solution is found when two of the three circles are vertically aligned.
+
+\subsection{Physics-Based AI Model}
+
+\subsubsection*{Introduction}
+
+Instead of a graph-based approach, we chose to employ a physics-based approach which models physics disks that move in a 2D plane.  Initially, disks are spread out in a circular pattern, and then a forcing function is applied at each update  
+
+\subsubsection*{Initialization}
+-Spread disks in circular pattern
+(Picture)
+
+\subsubsection*{Iterate}
+
+-At each step, we compute the new the center of gravity
+-For each disk, compute the velocity according to the forcing function (currently a velocity impulse)
+  - Linear in the distance of the disk from the center of gravity
+  - Quadratic in the radius of the disk
+- Sort by increasing radius from the center of gravity
+  - The purpose of this is to be able to detect all collisions with a single pass, as long as we can guarantee that no disk is moved towards the center of gravity as a result of collision detection
+ - Compute the minimum bound, compare to the smallest seen minimum bound and if it is smaller record the disk configuration
+  
+\subsubsection*{Stopping Condition}
+ - Currently fixed at 2000 iterations
+  - Once the iterations are completed, we reset the configuration to the seen number of minimum disks
+  
+  
+
+
+
+
 
 References:
 \begin{itemize}
