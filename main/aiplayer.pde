@@ -5,7 +5,7 @@ class AIPlayer {
   float da = dt*10;
   float min_r, min_x, min_y;
   float[][] min_centers;
-  int iters=0, max_iters=2000, settle_iters=0;
+  int iters=0, max_iters=0, settle_iters=0;
   Disks disks;
   int s;
   AIPlayer(float x, float y, Disks my_disks) {center_x=x; center_y = y; disks = my_disks;}
