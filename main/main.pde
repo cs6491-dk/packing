@@ -19,6 +19,10 @@ MouseController mc;
 AIPlayer ai;
 Disks disks1; // player 1 disks
 Disks disks2; // player 2 disks
+Disk bound_1; // bound for player 1
+Disk bound_2; // bound for player 2
+float min_r_seen = 5e10;
+Disks min_r_disks = null;
 int turn=0; // player 1
 // color variables are defined in the "utilities" tab and set in "defineColors" during initialization
 
@@ -65,9 +69,16 @@ void draw() {
   displayDisks();
   if (!mousePressed) scribeMouseCoordinates();
   if (scribeText) displayTextImage();
-  minbound(disks1).show_outline();
-  minbound(disks2).show_outline();
+  bound_1 = minbound(disks1).show_outline();
+  if (bound_1.get_r() < min_r_seen) 
+  {  
+    min_r_seen = bound_1.get_r();
+    min_r_disks = new Disks(disks1);
+    println("min_r_disks bound: " + minbound(min_r_disks).get_r());
+  }
+  bound_2 = minbound(disks2).show_outline();
   //Disk tmp = new Disk(30, 30, 50);
+  text("Min bound seen: " + min_r_seen, 30, 100);
 }
 
 // User actions
@@ -82,7 +93,14 @@ void keyPressed() {
       println("Game over, score both players");
     }
     
-      mc.set_turn();
+    println("Setting disks1 to min_r_disks");
+    disks1 = min_r_disks; // change the disks1 reference to point to min_r_disks
+    bound_1 = minbound(disks1).show_outline();
+    println("Bound1: " + bound_1.get_r());
+    println("min_r_disks bound: " + minbound(min_r_disks).get_r());
+    mc.set_turn();
+   
+      
     
   }
   if (key=='r') {
