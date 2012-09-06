@@ -1,10 +1,11 @@
 class AIPlayer {
   float center_x, center_y;
-  float angle = 0, da = 0.1, center_r = 40;
+  float angle = 0, center_r = 40;
   float init_r=100, dt=0.01;
+  float da = dt*10;
   float min_r, min_x, min_y;
   float[][] min_centers;
-  int iters=0, max_iters=1000, settle_iters=100;
+  int iters=0, max_iters=2000, settle_iters=0;
   Disks disks;
   int s;
   AIPlayer(float x, float y, Disks my_disks) {center_x=x; center_y = y; disks = my_disks;}
@@ -26,6 +27,7 @@ class AIPlayer {
       }
       cursor = minbound(disks);
       min_r = cursor.r;
+      min_r_seen = min_r;
       min_x = center_x;
       min_y = center_y;
       min_centers = new float[s][2];
@@ -45,6 +47,7 @@ class AIPlayer {
       cursor = minbound(disks);
       if (cursor.r < min_r) {
         min_r = cursor.r;
+        min_r_seen = min_r;
         min_x = x;
         min_y = y;
         for (int i=0; i < s; i++) {

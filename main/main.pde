@@ -20,6 +20,7 @@ AIPlayer ai;
 Disks disks1; // player 1 disks
 Disks disks2; // player 2 disks
 int turn=0; // player 1
+float min_r_seen;
 // color variables are defined in the "utilities" tab and set in "defineColors" during initialization
 
 //**************************** initialization ****************************
@@ -67,7 +68,7 @@ void draw() {
   if (scribeText) displayTextImage();
   minbound(disks1).show_outline();
   minbound(disks2).show_outline();
-  //Disk tmp = new Disk(30, 30, 50);
+  text("Min bound seen: " + min_r_seen, 30, 100);
 }
 
 // User actions
@@ -77,13 +78,13 @@ void keyPressed() {
   if (key=='?') scribeText=!scribeText; // toggle display of help text and authors picture
   if (key=='!') snapPicture(); // make a picture of the canvas
   if (key=='d') {
-    turn += 1;
-    if (turn == 2) {
-      println("Game over, score both players");
-    }
-    
+    if (turn > 0) {
+      turn += 1;
+      if (turn == 2) {
+        println("Game over, score both players");
+      }
       mc.set_turn();
-    
+    }
   }
   if (key=='r') {
     setup();
