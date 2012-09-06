@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usepackage{mathptmx}
+\usepackage{amsmath}
 
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \usepackage{wrapfig}
@@ -26,12 +27,12 @@
 \titlespacing{\subsection}{5pt}{1ex}{2ex}
 \titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
 
-\title{Packing Game - Part A}
+\title{Packing Game - Parts A and B}
 \author{
 Donnie Smith (donnie.smith@gatech.edu) \\
 Kyle Harrigan (kwharrigan@gmail.com) 
 }	
-\date{August 28, 2012}                                           % Activate to display a given date or no date
+\date{September 6, 2012}                                           % Activate to display a given date or no date
 
 \begin{document}
 \begingroup
@@ -48,11 +49,11 @@ Kyle Harrigan (kwharrigan@gmail.com)
 \end{tikzpicture}
 
 
- \subsection{Problem Statement}
+ \subsection*{Problem Statement}
   
 Implement an application which allows two human players to compete in an intense battle of disk packing.  The goal is for players to pack the disks as tightly as possible, resulting in the smallest enclosing sphere.  The program must calculate the minimal enclosing sphere, assign a score to each user, and declare a winner.  
  
- \subsection{Completed Features}
+ \subsection*{Completed Features}
  \begin{multicols}{2}
  \begin{itemize}
  \setlength\multicolsep{0pt}
@@ -60,21 +61,23 @@ Implement an application which allows two human players to compete in an intense
 \item Read disk count and disk sizes from file
 \item Create initial holding area for discs
 \item Limit disk movement to appropriate player's side
-\item Implemented pairwise and triplet collision detection
-\item Implemented bounding circles for pairs and triplets(minimal containing disk)
-\item Implemented scoring and basic gameplay
+\item Pairwise and triplet collision detection
+\item Bounding circles for pairs and triplets(minimal containing disk)
+\item Scoring and basic gameplay
+\item Physics-based AI Player 
 \end{itemize}
 \end{multicols}
 
- \subsection{To Be Done}
+ \subsection*{To Be Done}
   \begin{multicols}{2}
  \begin{itemize}
 \item Need to improve collision detection-- remove "flipping" and overlap conditions
 \item Possibly optimize computation of minimal containing disk
+\item AI collision detection improvements
 \end{itemize}
 \end{multicols}
  
-\subsection{Computing Minimal Containing Disk}
+\subsection*{Computing Minimal Containing Disk}
 The minimal containing circle was computed by finding the minimal containing circles for all pairs and some triplets of the circles.
 The algorithm functions as follows:
 \begin{enumerate}
@@ -96,37 +99,62 @@ This algorithm is not the most efficient available, but runs in $O(n^4)$ time, w
 The solution to the minimal bounding circle for triplets, which is one of the ten cases of Apollonius' Problem, was adapted from code written by Rasmus Fonseca.
 The code was modified to fix a bug in which an invalid solution is found when two of the three circles are vertically aligned.
 
-\subsection{Physics-Based AI Model}
+\subsection*{Physics-Based AI Model}
 
 \subsubsection*{Introduction}
 
-Instead of a graph-based approach, we chose to employ a physics-based approach which models physics disks that move in a 2D plane.  Initially, disks are spread out in a circular pattern, and then a forcing function is applied at each update  
+Instead of a graph-based approach, we chose to employ a physics-based approach which models physical disks that move in a 2D plane.  Initially, disks are spread out in a circular pattern, and then a forcing function is applied at each update in an attempt to search for the best solution.  A description of the algorithm steps follows.  
 
 \subsubsection*{Initialization}
--Spread disks in circular pattern
-(Picture)
+Disks are initially spread disks out in a circular pattern
+
+\includegraphics[width=200px,height=180px]{main/data/physics_init_clipped.png}
 
 \subsubsection*{Iterate}
 
--At each step, we compute the new the center of gravity
--For each disk, compute the velocity according to the forcing function (currently a velocity impulse)
-  - Linear in the distance of the disk from the center of gravity
-  - Quadratic in the radius of the disk
-- Sort by increasing radius from the center of gravity
-  - The purpose of this is to be able to detect all collisions with a single pass, as long as we can guarantee that no disk is moved towards the center of gravity as a result of collision detection
- - Compute the minimum bound, compare to the smallest seen minimum bound and if it is smaller record the disk configuration
+\begin{itemize}
+\itemsep0em
+\item{At each step, we compute the new the center of gravity.  The center of gravity is moved in order to induce a "shaking" or "shuffling" effect upon the disks}
+
+
+\begin{align}
+     da & = 0.1 \\
+      angle & = (angle + da) \\ % TWO_PI; 
+      x & = center_x + center_r\times cos(angle) \\
+      y & = center_y + center_r\times sin(angle)
+\end{align}
+
+\item{For each disk, compute the velocity according to the forcing function (currently a velocity impulse):}
+
+\begin{align}
+      dx &= x - cursor.x \\
+      dy &= y - cursor.y \\
+      center_x &= cursor.x + dx*sq(cursor.r)/20*dt \\
+      center_y &= cursor.y + dy*sq(cursor.r)/20*dt
+\end{align}
+	\begin{itemize}
+	\itemsep0em
+  \item{Linear in the distance of the disk from the center of gravity}
+  \item{Quadratic in the radius of the disk}
+  \end{itemize}
+\item{Then, sort by increasing radius from the center of gravity}
+\begin{itemize}
+\itemsep0em
+ \item{The purpose of the sort is to be able to detect all collisions with a single pass, as long as we can guarantee that no disk is moved towards the center of gravity as a result of collision detection}
+ \end{itemize}
+ \item{Finally, compute the minimum bound, compare to the smallest seen minimum bound and if it is smaller record the disk configuration at this minimum value}
+ \end{itemize}
   
 \subsubsection*{Stopping Condition}
- - Currently fixed at 2000 iterations
-  - Once the iterations are completed, we reset the configuration to the seen number of minimum disks
+The physics-based model iterates over time.  
+\begin{itemize}
+\itemsep0em
+\item{Currently fixed at 2000 iterations which produces a reasonable solution that beats most humans}
+\item{Once the iterations are completed, we reset to configuration to the seen number of minimum disks and display}
+\end{itemize}
+
   
-  
-
-
-
-
-
-References:
+\subsection*{References}
 \begin{itemize}
 \itemsep0em
 	\item http://en.wikipedia.org/wiki/Smallest\_circle\_problem
