@@ -1,9 +1,10 @@
 class AIPlayer {
   float center_x, center_y;
-  float angle = 0, center_r = 40;
+  float angle = 0, center_r = 50;
   float init_r=100, dt=0.01;
   float da = dt*10;
   float min_r, min_x, min_y;
+  float max_r;
   float[][] min_centers;
   int iters=0, max_iters=4000, settle_iters=0;
   Disks disks;
@@ -20,14 +21,17 @@ class AIPlayer {
     if (iters == 0) {
       s = disks.size();
       float a;
+      max_r = 0;
       for (int i=0; i < s; i++) {
         cursor = disks.get(i);
         a = TWO_PI/s * i;
         cursor.set_center(center_x + init_r*cos(a), center_y + init_r*sin(a));
+        if (cursor.r > max_r) {
+          max_r = cursor.r;
+        }
       }
-      cursor = minbound(disks);
-      min_r = cursor.r;
-      min_r_seen = min_r;
+      min_r = 1e10;
+      min_r_seen = 1e10;
       min_x = center_x;
       min_y = center_y;
       min_centers = new float[s][2];
@@ -84,8 +88,9 @@ class AIPlayer {
       dy = y - cursor.y;
       float p = 1;//random(0.9, 1.1);
       // Alter the equation for "gravity" here
-      cursor.set_center(cursor.x + dx*sq(cursor.r)/20*dt*p,
-                        cursor.y + dy*sq(cursor.r)/20*dt*p);
+      float force_r = max(5, cursor.r);
+      cursor.set_center(cursor.x + dx*sq(force_r)/max_r*dt*p,
+                        cursor.y + dy*sq(force_r)/max_r*dt*p);
       dx = x - cursor.x;
       dy = y - cursor.y;
       r[i] = sqrt(dx*dx + dy*dy);
