@@ -5,7 +5,7 @@ class AIPlayer {
   float da = dt*10;
   float min_r, min_x, min_y;
   float[][] min_centers;
-  int iters=0, max_iters=2000, settle_iters=0;
+  int iters=0, max_iters=4000, settle_iters=0;
   Disks disks;
   int s;
   AIPlayer(float x, float y, Disks my_disks) {center_x=x; center_y = y; disks = my_disks;}
@@ -45,7 +45,7 @@ class AIPlayer {
       do_physics(x, y);
 
       cursor = minbound(disks);
-      if (cursor.r < min_r) {
+      if ((cursor.r < min_r) && check_sol(disks)) {
         min_r = cursor.r;
         min_r_seen = min_r;
         min_x = x;
@@ -82,9 +82,10 @@ class AIPlayer {
       cursor = disks.get(i);
       dx = x - cursor.x;
       dy = y - cursor.y;
+      float p = 1;//random(0.9, 1.1);
       // Alter the equation for "gravity" here
-      cursor.set_center(cursor.x + dx*sq(cursor.r)/20*dt,
-                        cursor.y + dy*sq(cursor.r)/20*dt);
+      cursor.set_center(cursor.x + dx*sq(cursor.r)/20*dt*p,
+                        cursor.y + dy*sq(cursor.r)/20*dt*p);
       dx = x - cursor.x;
       dy = y - cursor.y;
       r[i] = sqrt(dx*dx + dy*dy);
@@ -98,7 +99,7 @@ class AIPlayer {
         if (ordered_r[i] == r[j]) {
           idx[i] = j;
           r[j] = -1;
-          continue;
+          break;
         }
       }
     }
@@ -122,5 +123,20 @@ class AIPlayer {
         }
       }
     }
+  }
+
+  boolean check_sol(Disks disks) {
+    s = disks.size();
+    Disk d1, d2;
+    for (int i=0; i < s; i++) {
+      d1 = disks.get(i);
+      for (int j=i+1; j < s; j++) {
+        d2 = disks.get(j);
+        if ((sq(d1.x-d2.x)+sq(d1.y-d2.y)) < sq(d1.r+d2.r)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
