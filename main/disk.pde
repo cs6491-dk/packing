@@ -36,7 +36,7 @@ class Disks {
         });
         for (int i=0; i < disks.size(); i++){
            Disk tmp = disks.get(i);
-           tmp.set_y(50*(i+1)); 
+           tmp.set_y(25*(i+1)); 
         }
         
    }

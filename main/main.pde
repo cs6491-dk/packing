@@ -25,7 +25,7 @@ float min_r_seen;
 
 //**************************** initialization ****************************
 void setup() {               // executed once at the begining 
-  size(800, 600);            // canvas size
+  size(800, 800);            // canvas size
   disks1 = new Disks();
   disks2 = new Disks();
   loadDiskConfig();
